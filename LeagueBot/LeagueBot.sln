@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28922.388
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "LeagueBot", "LeagueBot\LeagueBot.pyproj", "{62182A9D-CBBD-44E1-8C28-91E462570DAE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{62182A9D-CBBD-44E1-8C28-91E462570DAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62182A9D-CBBD-44E1-8C28-91E462570DAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7AE4B6E2-175D-490F-A183-790970007628}
+	EndGlobalSection
+EndGlobal
