@@ -18,6 +18,7 @@ leaguestart = 'https://na1.api.riotgames.com/lol/league/v4/entries/by-summoner/'
 iconstart = 'http://ddragon.leagueoflegends.com/cdn/6.24.1/img/profileicon/'
 champlink = 'http://ddragon.leagueoflegends.com/cdn/6.24.1/data/en_US/champion/'
 champpicstart = 'http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/' 
+items ='http://ddragon.leagueoflegends.com/cdn/6.24.1/data/en_US/item.json'
 @client.event
 async def on_ready():
     print('started')
@@ -65,7 +66,7 @@ async def profile(ctx, name: str):
           #losses.append(str(losses)) 
         #type.append(str(type)) 
 
-    winpercent = float((wins / losses)/2)
+    winpercent = float((wins / losses)/2*100)
     finalrank = tier + ' ' + rank
     iconend = iconstart + str(profileicon) + '.png'
 
@@ -82,16 +83,19 @@ async def profile(ctx, name: str):
     embed.add_field(name="LP", value=points, inline=True)
     embed.add_field(name="Wins", value=wins, inline=True)
     embed.add_field(name="Losses", value=losses, inline=True)
-    avatar_url(name="Losses", value=losses, inline=True)
+    #avatar_url(name="Losses", value=losses, inline=True)
 
     embed.set_footer(text = "Created by Eryck13",icon_url = icon)
     await ctx.send(embed = embed)
 
 @client.command()
-async def commands(ctx):
+async def How(ctx):
     embed = discord.Embed(title="Commands", description="List of the following commands applicable/Tips", color=3488062)
     embed.add_field(name="Names with spaces", value="Use '_' as a replacement of spaces", inline=False)
     embed.add_field(name="How to view summoner profile ", value="!profile", inline=False)
+    embed.add_field(name="Champion BaseStats", value="Use !Champion 'Insert Champion name here' (Every champion's name needs to be defined with a capital letter)", inline=False)
+    embed.add_field(name="Lore Story", value="Use !Lore 'Insert Champion name here'(Every champion's name needs to be defined with a capital letter)", inline=False)
+    embed.set_thumbnail(url='http://www.macupdate.com/images/icons256/47210.png')
     embed.set_footer(text = "Created by Eryck13",icon_url = icon)
     await ctx.send(embed=embed)
 
@@ -103,26 +107,29 @@ async def Champion(ctx,champion: str):
     jsonreq3 = json.loads(get3.text) 
     pic = jsonreq3['data'][str(champion)]['id']
     desc = jsonreq3['data'][str(champion)]['title']
-    hp = jsonreq3['data'][str(champion)]['stats']['hp']
-    hpperlevel = jsonreq3['data'][str(champion)]['stats']['hpperlevel']
-    mp = jsonreq3['data'][str(champion)]['stats']['mp']
-    mpperlevel = jsonreq3['data'][str(champion)]['stats']['mpperlevel']
-    movespeed = jsonreq3['data'][str(champion)]['stats']['movespeed']
-    armor = jsonreq3['data'][str(champion)]['stats']['armor']
-    armorperlevel = jsonreq3['data'][str(champion)]['stats']['armorperlevel']
-    spellblock  =  jsonreq3['data'][str(champion)]['stats']['spellblock']
-    spellblockperlevel = jsonreq3['data'][str(champion)]['stats']['spellblockperlevel']
-    attackrange =  jsonreq3['data'][str(champion)]['stats']["attackrange"]
-    hpregen = jsonreq3['data'][str(champion)]['stats']['hpregen']
-    hpregenperlevel =  jsonreq3['data'][str(champion)]['stats']['hpregenperlevel']
-    mpregen = jsonreq3['data'][str(champion)]['stats']['mpregen']
-    mpregenperlevel =  jsonreq3['data'][str(champion)]['stats']['mpregenperlevel']
-    crit = jsonreq3['data'][str(champion)]['stats']['crit']
-    critperlevel =  jsonreq3['data'][str(champion)]['stats']['critperlevel']
-    attackdamage = jsonreq3['data'][str(champion)]['stats']['attackdamage']
-    attackdamageperlevel  = jsonreq3['data'][str(champion)]['stats']['attackdamageperlevel']
-    attackspeedoffset = jsonreq3['data'][str(champion)]['stats']['attackspeedoffset']
-    attackspeedperlevel  = jsonreq3['data'][str(champion)]['stats']['attackspeedperlevel']
+        #for each in jsonreq4['data'][str(champion)]['spells']:
+
+    for each in jsonreq3['data'][str(champion)]['stats']:
+        hp = each['hp']
+        hpperlevel = each['hpperlevel']
+        mp = each['mp']
+        mpperlevel = each['mpperlevel']
+        movespeed = each['movespeed']
+        armor = each['armor']
+        armorperlevel = each['armorperlevel']
+        spellblock  =  each['spellblock']
+        spellblockperlevel = each['spellblockperlevel']
+        attackrange =  each["attackrange"]
+        hpregen = each['hpregen']
+        hpregenperlevel =  each['hpregenperlevel']
+        mpregen = each['mpregen']
+        mpregenperlevel =  each['mpregenperlevel']
+        crit = each['crit']
+        critperlevel =  each['critperlevel']
+        attackdamage = each['attackdamage']
+        attackdamageperlevel  = each['attackdamageperlevel']
+        attackspeedoffset = each['attackspeedoffset']
+        attackspeedperlevel  = each['attackspeedperlevel']
 
     finalpic = champpicstart + pic + '.png'
 
@@ -152,4 +159,58 @@ async def Champion(ctx,champion: str):
     await ctx.send(embed=embed)
     #avatar_url(name="Losses", value=losses, inline=True)
 
+@client.command()
+async def Skins(ctx,champ: str):
+    url5 = champlink + champ +'.json'
+    get5 = requests.get(url5)
+    jsonreq5 = json.loads(get5.text) 
+    startskinpic ='http://ddragon.leagueoflegends.com/cdn/img/champion/loading/'+ champ + '_'
+    for each in jsonreq5['data'][str(champ)]['skins']:
+        number = each['num']
+        name = each['name']
+        finalskin = startskinpic  + str(number) + '.jpg'
+        embed = discord.Embed(title=name, color=3488062)
+        embed.set_thumbnail(url=finalskin)
+        embed.set_footer(text = "Created by Eryck13",icon_url = icon)
+        await ctx.send(embed=embed)
+
+@client.command()
+async def Item(ctx,item: str):
+    get4 = requests.get(items)
+    jsonreq6 = json.loads(get4.text)
+    
+    for each in jsonreq6['data']:
+        keyname = each['name']
+        if item in keyname.lower():
+            for each in keyname:
+                descript = each['description']
+                imgtag = each['image']
+                gold = each['gold']
+
+                
+
+
+
+
+
+
+@client.command()
+async def Lore(ctx,champion: str):
+    champion = ''.join(champion.split())
+    url4 = champlink + champion +'.json'
+    get4 = requests.get(url4)
+    jsonreq4 = json.loads(get4.text) 
+
+    pic = jsonreq4['data'][str(champion)]['id']
+    desc = jsonreq4['data'][str(champion)]['title']
+    lore = jsonreq4['data'][str(champion)]['lore']
+    lore = lore.replace('<br>','')
+
+
+
+    finalpic = champpicstart + pic + '.png'
+    embed = discord.Embed(title=pic, description=lore, color=3488062)
+    embed.set_thumbnail(url=finalpic)
+    embed.set_footer(text = "Created by Eryck13",icon_url = icon)
+    await ctx.send(embed=embed)
 client.run(token)
