@@ -51,9 +51,7 @@ async def profile(ctx, name: str):
     for each in jsonreq2:
         
         #type1 = each['queueType']
-        if 'RANKED_FLEX_SR' in each['queueType']:
-            #type1.remove('RANKED_FLEX_SR')
-            break
+        
         tier = each['tier']
          #tier.append(str(tier))
         rank = each['rank']
@@ -65,28 +63,30 @@ async def profile(ctx, name: str):
         losses = each['losses']
           #losses.append(str(losses)) 
         #type.append(str(type)) 
-
-    winpercent = float((wins / losses)/2*100)
-    finalrank = tier + ' ' + rank
-    iconend = iconstart + str(profileicon) + '.png'
-
-
-
-
+        if 'RANKED_FLEX_SR' in each['queueType']:
+            #type1.remove('RANKED_FLEX_SR')
+            break
+        winpercent = float((wins / losses)/2*100)
+        finalrank = tier + ' ' + rank
+        iconend = iconstart + str(profileicon) + '.png'
 
 
-    embed = discord.Embed(title='User Found!',description=namefinished, color=3488062)
-    embed.set_thumbnail(url=iconend)
-    embed.add_field(name="Level", value= level, inline=True)
-    embed.add_field(name="Rank", value= finalrank, inline=True)
-    embed.add_field(name="Win%", value=winpercent, inline=True)
-    embed.add_field(name="LP", value=points, inline=True)
-    embed.add_field(name="Wins", value=wins, inline=True)
-    embed.add_field(name="Losses", value=losses, inline=True)
-    #avatar_url(name="Losses", value=losses, inline=True)
 
-    embed.set_footer(text = "Created by Eryck13",icon_url = icon)
-    await ctx.send(embed = embed)
+
+
+
+        embed = discord.Embed(title='User Found!',description=namefinished, color=3488062)
+        embed.set_thumbnail(url=iconend)
+        embed.add_field(name="Level", value= level, inline=True)
+        embed.add_field(name="Rank", value= finalrank, inline=True)
+        embed.add_field(name="Win%", value=winpercent, inline=True)
+        embed.add_field(name="LP", value=points, inline=True)
+        embed.add_field(name="Wins", value=wins, inline=True)
+        embed.add_field(name="Losses", value=losses, inline=True)
+        #avatar_url(name="Losses", value=losses, inline=True)
+
+        embed.set_footer(text = "Created by Eryck13",icon_url = icon)
+        await ctx.send(embed = embed)
 
 @client.command()
 async def How(ctx):
