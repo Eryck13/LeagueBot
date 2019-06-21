@@ -19,6 +19,7 @@ iconstart = 'http://ddragon.leagueoflegends.com/cdn/6.24.1/img/profileicon/'
 champlink = 'http://ddragon.leagueoflegends.com/cdn/6.24.1/data/en_US/champion/'
 champpicstart = 'http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/' 
 items ='http://ddragon.leagueoflegends.com/cdn/6.24.1/data/en_US/item.json'
+
 @client.event
 async def on_ready():
     print('started')
@@ -37,57 +38,35 @@ async def profile(ctx, name: str):
 
     url2 = leaguestart + id + apikey
     get2 = requests.get(url2)
-    
     jsonreq2 = json.loads(get2.text)
-    
-    #jsonreqfinal=json.dumps(jsonreq2)
-    #for each in jsonreq2['leagueId']:
-    tier=[]
-    rank=[]
-    points=[]
-    wins=[]
-    losses=[]
-    type1=[]
+   
     for each in jsonreq2:
         
-        #type1 = each['queueType']
         
         tier = each['tier']
-         #tier.append(str(tier))
         rank = each['rank']
-        #rank.append(str(rank)) 
         points = each['leaguePoints']
-          #points.append(str(points)) 
         wins = each['wins']
-         #wins.append(str(wins)) 
         losses = each['losses']
-          #losses.append(str(losses)) 
-        #type.append(str(type)) 
-        if 'RANKED_FLEX_SR' in each['queueType']:
-            #type1.remove('RANKED_FLEX_SR')
-            break
+        type1 = each['queueType']
+        type1f= type1
+
         winpercent = float((wins / losses)/2*100)
         finalrank = tier + ' ' + rank
         iconend = iconstart + str(profileicon) + '.png'
 
-
-
-
-
-
-        embed = discord.Embed(title='User Found!',description=namefinished, color=3488062)
-        embed.set_thumbnail(url=iconend)
-        embed.add_field(name="Level", value= level, inline=True)
-        embed.add_field(name="Rank", value= finalrank, inline=True)
-        embed.add_field(name="Win%", value=winpercent, inline=True)
-        embed.add_field(name="LP", value=points, inline=True)
-        embed.add_field(name="Wins", value=wins, inline=True)
-        embed.add_field(name="Losses", value=losses, inline=True)
-        #avatar_url(name="Losses", value=losses, inline=True)
-
-        embed.set_footer(text = "Created by Eryck13",icon_url = icon)
-        await ctx.send(embed = embed)
-
+        if 'RANKED_SOLO_5x5' in str(type1f):                
+            embed = discord.Embed(title='User Found!',description=namefinished, color=3488062)
+            embed.set_thumbnail(url=iconend)
+            embed.add_field(name="Level", value= level, inline=True)
+            embed.add_field(name="SoloQ", value= finalrank, inline=True)
+            embed.add_field(name="Win%", value=winpercent, inline=True)
+            embed.add_field(name="LP", value=points, inline=True)
+            embed.add_field(name="Wins", value=wins, inline=True)
+            embed.add_field(name="Losses", value=losses, inline=True)
+            embed.set_footer(text = "Created by Eryck13",icon_url = icon)
+            await ctx.send(embed = embed)
+       
 @client.command()
 async def How(ctx):
     embed = discord.Embed(title="Commands", description="List of the following commands applicable/Tips", color=3488062)
@@ -100,36 +79,37 @@ async def How(ctx):
     await ctx.send(embed=embed)
 
 @client.command()
-async def Champion(ctx,champion: str):
+async def Champion(ctx, champion: str):
     champion = ''.join(champion.split())
-    url1 = champlink + champion +'.json'
-    get3 = requests.get(url1)
+    url3 = champlink + champion +'.json'
+    get3 = requests.get(url3)
     jsonreq3 = json.loads(get3.text) 
     pic = jsonreq3['data'][str(champion)]['id']
     desc = jsonreq3['data'][str(champion)]['title']
-        #for each in jsonreq4['data'][str(champion)]['spells']:
 
-    for each in jsonreq3['data'][str(champion)]['stats']:
-        hp = each['hp']
-        hpperlevel = each['hpperlevel']
-        mp = each['mp']
-        mpperlevel = each['mpperlevel']
-        movespeed = each['movespeed']
-        armor = each['armor']
-        armorperlevel = each['armorperlevel']
-        spellblock  =  each['spellblock']
-        spellblockperlevel = each['spellblockperlevel']
-        attackrange =  each["attackrange"]
-        hpregen = each['hpregen']
-        hpregenperlevel =  each['hpregenperlevel']
-        mpregen = each['mpregen']
-        mpregenperlevel =  each['mpregenperlevel']
-        crit = each['crit']
-        critperlevel =  each['critperlevel']
-        attackdamage = each['attackdamage']
-        attackdamageperlevel  = each['attackdamageperlevel']
-        attackspeedoffset = each['attackspeedoffset']
-        attackspeedperlevel  = each['attackspeedperlevel']
+    for each in jsonreq3['data'][str(champion)]:
+        stat = each['stats']
+        for each in stat:
+            hp = each['hp']
+            hpperlevel = each['hpperlevel']
+            mp = each['mp']
+            mpperlevel = each['mpperlevel']
+            movespeed = each['movespeed']
+            armor = each['armor']
+            armorperlevel = each['armorperlevel']
+            spellblock  =  each['spellblock']
+            spellblockperlevel = each['spellblockperlevel']
+            attackrange =  each['attackrange']
+            hpregen = each['hpregen']
+            hpregenperlevel =  each['hpregenperlevel']
+            mpregen = each['mpregen']
+            mpregenperlevel =  each['mpregenperlevel']
+            crit = each['crit']
+            critperlevel =  each['critperlevel']
+            attackdamage = each['attackdamage']
+            attackdamageperlevel  = each['attackdamageperlevel']
+            attackspeedoffset = each['attackspeedoffset']
+            attackspeedperlevel  = each['attackspeedperlevel']
 
     finalpic = champpicstart + pic + '.png'
 
@@ -189,15 +169,15 @@ async def Skins(ctx,champ: str):
                 
 
 @client.command()
-async def Lore(ctx,champion: str):
-    champion = ''.join(champion.split())
-    url4 = champlink + champion +'.json'
+async def Lore(ctx,story: str):
+    story = ''.join(story.split())
+    url4 = champlink + story +'.json'
     get4 = requests.get(url4)
     jsonreq4 = json.loads(get4.text) 
 
-    pic = jsonreq4['data'][str(champion)]['id']
-    desc = jsonreq4['data'][str(champion)]['title']
-    lore = jsonreq4['data'][str(champion)]['lore']
+    pic = jsonreq4['data'][str(story)]['id']
+    desc = jsonreq4['data'][str(story)]['title']
+    lore = jsonreq4['data'][str(story)]['lore']
     lore = lore.replace('<br>','')
 
 
@@ -207,4 +187,5 @@ async def Lore(ctx,champion: str):
     embed.set_thumbnail(url=finalpic)
     embed.set_footer(text = "Created by Eryck13",icon_url = icon)
     await ctx.send(embed=embed)
+
 client.run(token)
