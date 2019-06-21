@@ -12,7 +12,7 @@ token = 'NTkxMTAxOTU5NDQ5MzQ2MDY5.XQr4uA.o1T1UApN78g9TgYPcP7Uz0tbArY'
 
 client = commands.Bot(command_prefix='!')
 icon = 'https://cdn.discordapp.com/emojis/569632408895225856.gif?v=1/'
-apikey = '/?api_key=RGAPI-9c7efa07-8f07-4920-a2e7-9c48408ba345'
+apikey = '/?api_key=RGAPI-0df16412-7cc8-4124-a345-e6dbc38fa788'
 sumstart = 'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/'
 leaguestart = 'https://na1.api.riotgames.com/lol/league/v4/entries/by-summoner/'
 iconstart = 'http://ddragon.leagueoflegends.com/cdn/6.24.1/img/profileicon/'
