@@ -174,25 +174,19 @@ async def Skins(ctx,champ: str):
         embed.set_footer(text = "Created by Eryck13",icon_url = icon)
         await ctx.send(embed=embed)
 
-@client.command()
-async def Item(ctx,item: str):
-    get4 = requests.get(items)
-    jsonreq6 = json.loads(get4.text)
+#@client.command()
+#async def Item(ctx,item: str):
+#    get4 = requests.get(items)
+#    jsonreq6 = json.loads(get4.text)
     
-    for each in jsonreq6['data']:
-        keyname = each['name']
-        if item in keyname.lower():
-            for each in keyname:
-                descript = each['description']
-                imgtag = each['image']
-                gold = each['gold']
-
+#    for each in jsonreq6['data']:
+#        keyname = each['name']
+#        if item in keyname.lower():
+#            for each in keyname:
+#                descript = each['description']
+#                imgtag = each['image']
+#                gold = each['gold']
                 
-
-
-
-
-
 
 @client.command()
 async def Lore(ctx,champion: str):
