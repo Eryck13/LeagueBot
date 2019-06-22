@@ -12,7 +12,7 @@ token = 'NTkxMTAxOTU5NDQ5MzQ2MDY5.XQr4uA.o1T1UApN78g9TgYPcP7Uz0tbArY'
 
 client = commands.Bot(command_prefix='!')
 icon = 'https://cdn.discordapp.com/emojis/569632408895225856.gif?v=1/'
-apikey = '/?api_key=RGAPI-0df16412-7cc8-4124-a345-e6dbc38fa788'
+apikey = '/?api_key=RGAPI-a2030cfa-7672-413a-933e-df4fb41f10af'
 sumstart = 'https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/'
 leaguestart = 'https://na1.api.riotgames.com/lol/league/v4/entries/by-summoner/'
 iconstart = 'http://ddragon.leagueoflegends.com/cdn/6.24.1/img/profileicon/'
@@ -71,45 +71,50 @@ async def profile(ctx, name: str):
 async def How(ctx):
     embed = discord.Embed(title="Commands", description="List of the following commands applicable/Tips", color=3488062)
     embed.add_field(name="Names with spaces", value="Use '_' as a replacement of spaces", inline=False)
-    embed.add_field(name="How to view summoner profile ", value="!profile", inline=False)
+    embed.add_field(name="How to view summoner profile ", value="!profile 'Insert Champion name here'(Every champion's name needs to be defined with a capital letter)", inline=False)
+    embed.add_field(name="Displays long ass story about a champion", value="!Lore 'Insert Champion name here'(Every champion's name needs to be defined with a capital letter)", inline=False)
+    embed.add_field(name="Shows all skins for specified champion", value="!Skins 'Insert Champion name here'(Every champion's name needs to be defined with a capital letter)", inline=False)
     embed.add_field(name="Champion BaseStats", value="Use !Champion 'Insert Champion name here' (Every champion's name needs to be defined with a capital letter)", inline=False)
-    embed.add_field(name="Lore Story", value="Use !Lore 'Insert Champion name here'(Every champion's name needs to be defined with a capital letter)", inline=False)
+    #embed.add_field(name="Lore Story", value="Use !Lore 'Insert Champion name here'(Every champion's name needs to be defined with a capital letter)", inline=False)
     embed.set_thumbnail(url='http://www.macupdate.com/images/icons256/47210.png')
     embed.set_footer(text = "Created by Eryck13",icon_url = icon)
     await ctx.send(embed=embed)
 
 @client.command()
 async def Champion(ctx, champion: str):
-    champion = ''.join(champion.split())
+    #champion = ''.join(champion.split())
+    champnew = champion
     url3 = champlink + champion +'.json'
     get3 = requests.get(url3)
     jsonreq3 = json.loads(get3.text) 
     pic = jsonreq3['data'][str(champion)]['id']
     desc = jsonreq3['data'][str(champion)]['title']
 
-    for each in jsonreq3['data'][str(champion)]:
-        stat = each['stats']
-        for each in stat:
-            hp = each['hp']
-            hpperlevel = each['hpperlevel']
-            mp = each['mp']
-            mpperlevel = each['mpperlevel']
-            movespeed = each['movespeed']
-            armor = each['armor']
-            armorperlevel = each['armorperlevel']
-            spellblock  =  each['spellblock']
-            spellblockperlevel = each['spellblockperlevel']
-            attackrange =  each['attackrange']
-            hpregen = each['hpregen']
-            hpregenperlevel =  each['hpregenperlevel']
-            mpregen = each['mpregen']
-            mpregenperlevel =  each['mpregenperlevel']
-            crit = each['crit']
-            critperlevel =  each['critperlevel']
-            attackdamage = each['attackdamage']
-            attackdamageperlevel  = each['attackdamageperlevel']
-            attackspeedoffset = each['attackspeedoffset']
-            attackspeedperlevel  = each['attackspeedperlevel']
+    jsonnew = jsonreq3['data'][champnew]['stats']
+            #stat = i['stats']
+            #pic = i['id']
+            #desc = i['title']
+            #for i in stat:
+    hp = jsonnew['hp']
+    hpperlevel = jsonnew['hpperlevel']
+    mp = jsonnew['mp']
+    mpperlevel = jsonnew['mpperlevel']
+    movespeed = jsonnew['movespeed']
+    armor = jsonnew['armor']
+    armorperlevel = jsonnew['armorperlevel']
+    spellblock  =  jsonnew['spellblock']
+    spellblockperlevel = jsonnew['spellblockperlevel']
+    attackrange =  jsonnew['attackrange']
+    hpregen = jsonnew['hpregen']
+    hpregenperlevel =  jsonnew['hpregenperlevel']
+    mpregen = jsonnew['mpregen']
+    mpregenperlevel =  jsonnew['mpregenperlevel']
+    crit = jsonnew['crit']
+    critperlevel =  jsonnew['critperlevel']
+    attackdamage = jsonnew['attackdamage']
+    attackdamageperlevel  = jsonnew['attackdamageperlevel']
+    attackspeedoffset = jsonnew['attackspeedoffset']
+    attackspeedperlevel  = jsonnew['attackspeedperlevel']
 
     finalpic = champpicstart + pic + '.png'
 
@@ -141,6 +146,7 @@ async def Champion(ctx, champion: str):
 
 @client.command()
 async def Skins(ctx,champ: str):
+    
     url5 = champlink + champ +'.json'
     get5 = requests.get(url5)
     jsonreq5 = json.loads(get5.text) 
