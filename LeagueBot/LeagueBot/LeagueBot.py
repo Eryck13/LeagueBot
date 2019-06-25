@@ -56,7 +56,7 @@ async def profile(ctx, name: str):
         iconend = iconstart + str(profileicon) + '.png'
 
         if 'RANKED_SOLO_5x5' in str(type1f):                
-            embed = discord.Embed(title='User Found!',description=namefinished, color=3488062)
+            embed = discord.Embed(title='User Found!',description=namefinished, color=3488062,timestamp=datetime.datetime.utcnow())
             embed.set_thumbnail(url=iconend)
             embed.add_field(name="Level", value= level, inline=True)
             embed.add_field(name="SoloQ", value= finalrank, inline=True)
@@ -69,7 +69,7 @@ async def profile(ctx, name: str):
        
 @client.command()
 async def How(ctx):
-    embed = discord.Embed(title="Commands", description="List of the following commands applicable/Tips", color=3488062)
+    embed = discord.Embed(title="Commands", description="List of the following commands applicable/Tips", color=3488062,timestamp=datetime.datetime.utcnow())
     embed.add_field(name="Names with spaces", value="Use '_' as a replacement of spaces", inline=False)
     embed.add_field(name="How to view summoner profile ", value="!profile 'Insert Champion name here'(Every champion's name needs to be defined with a capital letter)", inline=False)
     embed.add_field(name="Displays long ass story about a champion", value="!Lore 'Insert Champion name here'(Every champion's name needs to be defined with a capital letter)", inline=False)
@@ -118,7 +118,7 @@ async def Champion(ctx, champion: str):
 
     finalpic = champpicstart + pic + '.png'
 
-    embed = discord.Embed(title=pic, description=desc, color=3488062)
+    embed = discord.Embed(title=pic, description=desc, color=3488062,timestamp=datetime.datetime.utcnow())
     embed.set_thumbnail(url=finalpic)
     embed.add_field(name="StartingHP", value= hp, inline=True)
     embed.add_field(name="HpPerLvl", value= hpperlevel, inline=True)
@@ -155,7 +155,7 @@ async def Skins(ctx,champ: str):
         number = each['num']
         name = each['name']
         finalskin = startskinpic  + str(number) + '.jpg'
-        embed = discord.Embed(title=name, color=3488062)
+        embed = discord.Embed(title=name, color=3488062,timestamp=datetime.datetime.utcnow())
         embed.set_thumbnail(url=finalskin)
         embed.set_footer(text = "Created by Eryck13",icon_url = icon)
         await ctx.send(embed=embed)
@@ -189,8 +189,9 @@ async def Lore(ctx,story: str):
 
 
     finalpic = champpicstart + pic + '.png'
-    embed = discord.Embed(title=pic, description=lore, color=3488062)
+    embed = discord.Embed(title=pic, description=lore, color=3488062,timestamp=datetime.datetime.utcnow())
     embed.set_thumbnail(url=finalpic)
+    embed.set_author(name=title,url=link,icon_url=carticon)               
     embed.set_footer(text = "Created by Eryck13",icon_url = icon)
     await ctx.send(embed=embed)
 
